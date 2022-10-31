@@ -1,0 +1,51 @@
+{% extends "base.html"%}
+{% block page %}
+{% load static %}
+
+    <section id="car-details">
+        <h1>Profile Details</h1>
+        <div class="info-section">
+            <div class="car-header">
+
+                {% if image is False %}
+                    <img class="car-img" src="{% static "images/default-profile.png" %}" alt='profile-image'/>
+                {% else %}
+                    <img class="car-img" src="{{ profile.profile_picture }}" alt='profile-image'/>
+                {% endif %}
+
+                {% if first_name is False and last_name is False %}
+
+                {% else %}
+                    {% if first_name is False %}
+                        <!-- user full name (if any) -->
+                        <h1>{{ profile.last_name }}</h1>
+                    {% elif last_name is False %}
+                        <h1>{{ profile.first_name }}</h1>
+                    {% else %}
+                        <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+                    {% endif %}
+                {% endif %}
+
+
+                <!-- user username -->
+                <p class="description">Username: {{ profile.user_name }}</p>
+                <!-- user email -->
+                <p class="description">Email: {{ profile.email }}</p>
+                <!-- user age -->
+                <p class="description">Age: {{ profile.age }}</p>
+                <!-- total price of all cars -->
+                {% if total_cost is None %}
+                <p class="description">Total price: 0</p>
+                {% else %}
+                <p class="description">Total price: {{ total_cost }}</p>
+                {% endif %}
+                <!-- Edit/Delete buttons -->
+                <div class="buttons">
+                    <a href="{% url "edit profile" %}" class="edit-button">Edit</a>
+                    <a href="{% url "profile delete" %}" class="delete-button">Delete</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
